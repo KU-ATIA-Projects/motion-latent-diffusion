@@ -1,0 +1,14 @@
+datasets/*
+deps/t2m/*
+example/
+*.pyc
+results/
+*.npz
+*.npy
+*.pkl
+*.h5
+*ckpt
+*.zip
+deps/smpl_models/
+
+

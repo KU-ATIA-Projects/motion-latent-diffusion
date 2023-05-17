@@ -40,7 +40,7 @@ def parse_args(phase="train"):
             "--cfg",
             type=str,
             required=False,
-            default="./configs/config.yaml",
+            default="./configs/config_mld_humanml3d.yaml",
             help="config file",
         )
         group.add_argument(
@@ -83,13 +83,20 @@ def parse_args(phase="train"):
         group.add_argument(
             "--replication",
             type=int,
-            default=1,
+            default=50,
             help="the frame rate for the input/output motion",
         )
+        # group.add_argument(
+        #     "--example",
+        #     type=str,
+        #     required=False,
+        #     help="input text and lengths with txt format",
+        # )
         group.add_argument(
             "--example",
             type=str,
             required=False,
+            default="./demo/example.txt",
             help="input text and lengths with txt format",
         )
         group.add_argument(

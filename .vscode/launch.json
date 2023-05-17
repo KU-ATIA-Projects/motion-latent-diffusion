@@ -1,0 +1,55 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Demo",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/pjr726/motion-latent-diffusion/demo.py",
+            "args": [
+                "--cfg", "/home/pjr726/motion-latent-diffusion/configs/config_mld_humanml3d.yaml",
+                "--cfg_assets", "/home/pjr726/motion-latent-diffusion/configs/assets.yaml",
+                "--example", "/home/pjr726/motion-latent-diffusion/demo/example.txt"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "/home/pjr726/motion-latent-diffusion"
+        },
+        {
+            "name": "Python: tsne",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/pjr726/motion-latent-diffusion/scripts/tsne.py",
+            "args": [
+                "--cfg",
+                "/home/pjr726/motion-latent-diffusion/configs/config_mld_humanact12.yaml",
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "/home/pjr726/motion-latent-diffusion"
+        },
+        {
+            "name": "Python: interpolate",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/pjr726/motion-latent-diffusion/playground.py",
+            "args": [
+                "--cfg",
+                "/home/pjr726/motion-latent-diffusion/configs/config_mld_humanact12.yaml",
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "/home/pjr726/motion-latent-diffusion"
+        }
+    ]
+}

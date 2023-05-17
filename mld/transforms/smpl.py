@@ -223,6 +223,8 @@ class SMPL(_SMPLLayer):
             super(SMPL, self).__init__(**kwargs)
 
         J_regressor_extra = np.load(J_path)
+        # J_regressor_extra = np.load(J_path, allow_pickle=True)
+
         self.register_buffer(
             'J_regressor_extra',
             torch.tensor(J_regressor_extra, dtype=torch.float32))

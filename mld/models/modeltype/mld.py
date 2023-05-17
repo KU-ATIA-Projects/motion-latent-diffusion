@@ -229,11 +229,45 @@ class MLD(BaseModel):
                     uncond_tokens.extend(uncond_tokens)
                 texts = uncond_tokens
             text_emb = self.text_encoder(texts)
-            z = self._diffusion_reverse(text_emb, lengths)
+            z = self._diffusion_reverse_tsne(text_emb, lengths)
         elif self.stage in ['vae']:
             motions = batch['motion']
             z, dist_m = self.vae.encode(motions, lengths)
+        
+        # define the file name
+        # file_dir = '/home/pjr726/motion-latent-diffusion/latent_vectors/left/latent_rep_0.npy'
 
+        # # check if the file already exists
+        # index = 0
+        # while True:
+        #     if os.path.exists(file_dir):
+        #         index += 1
+        #         file_dir = f"/home/pjr726/motion-latent-diffusion/latent_vectors/left/latent_rep_{index}.npy"
+        #     else:
+        #         break
+        # np.save(file_dir, z.cpu().numpy())
+        print(z.shape)
+        # conversion to numpy and save
+        z_numpy = z.detach().cpu().numpy()  # convert tensor to numpy array
+
+        # create directory if it doesn't exist
+        os.makedirs('/home/pjr726/motion-latent-diffusion/results/mld/latent_z_all_steps', exist_ok=True)
+
+        # create file name
+        for i, text in enumerate(texts[3:]):
+            # format the filename using the text and an index
+            filename = f"{text}_0.npy"
+
+            # check if file exists, if so increment index until it doesn't
+            while os.path.exists(os.path.join('/home/pjr726/motion-latent-diffusion/results/mld/latent_z_all_steps', filename)):
+                index = int(filename.split('_')[1].split('.')[0]) + 1
+                filename = f"{text}_{index}.npy"
+
+            # save the numpy array to a .npy file
+            np.save(os.path.join('/home/pjr726/motion-latent-diffusion/results/mld/latent_z_all_steps', filename), z_numpy[:,i,:])
+
+        z = z[-1, :, :].unsqueeze(0)
+        print(z.shape)
         with torch.no_grad():
             # ToDo change mcross actor to same api
             if self.vae_type in ["mld","actor"]:
@@ -273,6 +307,18 @@ class MLD(BaseModel):
         # feats => joints
         joints = self.feats2joints(feats_rst.detach().cpu())
         return remove_padding(joints, lengths)
+    
+    def gen_from_latent_action(self, batch):
+        z = batch["latent"]
+        lengths = batch["length"]
+
+        feats_rst = self.vae.decode(z, lengths)
+
+        # feats => joints
+        joints = self.feats2joints(feats_rst.detach().cpu())
+        return remove_padding(joints, lengths)
+
+
 
     def recon_from_motion(self, batch):
         feats_ref = batch["motion"]

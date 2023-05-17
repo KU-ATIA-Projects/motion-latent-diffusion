@@ -10,6 +10,8 @@ import torch
 from rich.progress import track
 
 from omegaconf import OmegaConf
+import sys
+sys.path.append('/home/pjr726/motion-latent-diffusion')
 from mld.data.utils import a2m_collate
 from torch.utils.data import DataLoader
 from mld.callback import ProgressLogger
@@ -40,7 +42,8 @@ def data_parse(step: int, latents: np.ndarray, classids: list):
     # labels = np.array(list(range(0,nclass)))
     # labels = labels.repeat(nsample)
 
-    labels = np.array(['sit', 'lift_dumbbell', 'turn_steering'])
+    # labels = np.array(['sit', 'lift_dumbbell', 'turn_steering'])
+    labels = np.array(['throw', 'walk', 'boxing'])
     labels = labels.repeat(nsample)
     # labels = [['sit']* nsample,['lift_dumbbell']* nsample, ['turn steering wheel']* nsample]
     # labels = labels * nsample
@@ -155,7 +158,7 @@ def main():
     # Generate latent codes
     with torch.no_grad():
         labels = torch.tensor(np.array(list(range(0,dataset.nclasses)))).unsqueeze(1).to(device)
-        lengths = torch.tensor([60]*dataset.nclasses).to(device)
+        lengths = torch.tensor([120]*dataset.nclasses).to(device)
         z_list = []
         for i in track(range(50),'Generating latent codes'):
             cond_emb = torch.cat((torch.zeros_like(labels), labels))
@@ -167,7 +170,7 @@ def main():
         print(latents.shape)
         
     # Draw figure
-    drawFig(output_dir, latents, classids = [8,6,5], steps = [0, 15, 35, 49])
+    drawFig(output_dir, latents, classids = [11,1,10], steps = [0, 15, 35, 49])
     logger.info("TSNE figure saved to {}".format(output_dir))
 
 if __name__ == "__main__":

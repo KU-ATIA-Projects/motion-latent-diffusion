@@ -1,6 +1,7 @@
 import logging
 import os
 import time
+import json
 from builtins import ValueError
 from multiprocessing.sharedctypes import Value
 from pathlib import Path
@@ -187,7 +188,7 @@ def main():
                 id = 0
                 for i in range(nsample):
                     npypath = str(output_dir /
-                                f"{task}_{length[i]}_batch{id}_{i}.npy")
+                                f"{task}_{length[i]}_batch{id}_{i}_{rep}.npy")
                     with open(npypath.replace(".npy", ".txt"), "w") as text_file:
                         text_file.write(batch["text"][i])
                     np.save(npypath, joints[i].detach().cpu().numpy())
@@ -230,6 +231,12 @@ def main():
                     torch.randn(1, nsample, latent_dim, device=model.device),
                     "length": [int(length)] * nsample,
                 }
+                # # n 
+                # batch_save = batch.copy()
+                # batch_save["latent"] = batch_save["latent"].cpu().numpy().tolist()
+                # with open("/home/pjr726/motion-latent-diffusion/results/latent_vector.json", "w") as f:
+                #     json.dump(batch_save, f)
+
                 # vae random sampling
                 joints = model.gen_from_latent(batch)
 

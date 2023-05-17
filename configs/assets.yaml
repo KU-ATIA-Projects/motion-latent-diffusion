@@ -38,6 +38,6 @@ model:
   #   MODELPATH: './deps/distilbert-base-uncased' # bert model path for text content encoder
 
 RENDER:
-  BLENDER_PATH: '/apdcephfs/share_1227775/mingzhenzhu/jiangbiao/libs/blender-2.93.2-linux-x64/blender'
-  FACES_PATH: '/apdcephfs/share_1227775/shingxchen/AIMotion/TMOSTData/deps/smplh/smplh.faces'
+  BLENDER_PATH: '/home/pjr726/blender-2.93.14-linux-x64/blender'
+  FACES_PATH: '/home/pjr726/motion-latent-diffusion/deps/smpl_models/smplh/smplh.faces'
   FOLDER: ./animations

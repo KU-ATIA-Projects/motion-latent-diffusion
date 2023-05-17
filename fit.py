@@ -51,11 +51,11 @@ parser.add_argument(
 parser.add_argument(
     "--save_folder",
     type=str,
-    default=None,
-    # default="./../TMOSTData/demo/",
+    # default=None,
+    default="./example/",
     help="results save folder",
 )
-parser.add_argument("--dir", type=str, default=None, help="folder use")
+parser.add_argument("--dir", type=str, default="/home/pjr726/motion-latent-diffusion/results/mld/1222_PELearn_Diff_Latent1_MEncDec49_MdiffEnc49_bs64_clip_uncond75_01/samples_2023-02-20-14-48-56", help="folder use")
 parser.add_argument("--files", type=str,
                     default="test_motion.npy", help="files use")
 opt = parser.parse_args()
